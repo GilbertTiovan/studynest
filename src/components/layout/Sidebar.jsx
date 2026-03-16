@@ -8,7 +8,9 @@ import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
+  LogOut,
 } from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard',    icon: LayoutDashboard },
@@ -20,6 +22,11 @@ const navItems = [
 
 export default function Sidebar({ activeView, setActiveView }) {
   const [collapsed, setCollapsed] = useState(false)
+  const { user, logout } = useAuth()
+
+  const initials = user?.displayName
+    ? user.displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : user?.email?.[0]?.toUpperCase() ?? '?'
 
   return (
     <aside
@@ -73,19 +80,53 @@ export default function Sidebar({ activeView, setActiveView }) {
         ))}
       </nav>
 
-      {/* Footer */}
+      {/* Footer — User info + Logout */}
       <div className={`border-t border-white/5 transition-all duration-300 ${collapsed ? 'p-2' : 'p-4'}`}>
         {collapsed ? (
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600/20 to-accent-500/10 border border-primary-500/20 mx-auto flex items-center justify-center">
-            <span className="text-xs">🚀</span>
+          <div className="flex flex-col items-center gap-2">
+            {user?.photoURL ? (
+              <img src={user.photoURL} alt="" className="w-8 h-8 rounded-full object-cover border border-white/10" />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-600/50 to-accent-500/30 border border-primary-500/20 flex items-center justify-center">
+                <span className="text-white text-xs font-bold">{initials}</span>
+              </div>
+            )}
+            <button
+              onClick={logout}
+              title="Logout"
+              className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:text-red-400 hover:bg-dark-600 transition-all"
+            >
+              <LogOut size={15} />
+            </button>
           </div>
         ) : (
-          <div className="glass-card p-3 text-center">
-            <p className="text-xs text-slate-500">WDC 2026</p>
-            <p className="text-xs font-semibold gradient-text mt-0.5">Empowering Students 🚀</p>
+          <div className="glass-card p-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              {user?.photoURL ? (
+                <img src={user.photoURL} alt="" className="w-8 h-8 rounded-full object-cover border border-white/10 flex-shrink-0" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-600/50 to-accent-500/30 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-white text-xs font-bold">{initials}</span>
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="text-slate-200 text-xs font-semibold truncate">
+                  {user?.displayName || 'User'}
+                </p>
+                <p className="text-slate-500 text-xs truncate">{user?.email}</p>
+              </div>
+              <button
+                onClick={logout}
+                title="Logout"
+                className="flex-shrink-0 p-1.5 text-slate-500 hover:text-red-400 hover:bg-dark-500 rounded-lg transition-all"
+              >
+                <LogOut size={14} />
+              </button>
+            </div>
           </div>
         )}
       </div>
     </aside>
   )
 }
+

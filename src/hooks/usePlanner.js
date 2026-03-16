@@ -4,30 +4,36 @@ import {
   doc, onSnapshot, serverTimestamp, query, orderBy
 } from 'firebase/firestore'
 import { db } from '../firebase/config'
-
-const COLLECTION = 'planner'
+import { useAuth } from '../context/AuthContext'
 
 export function usePlanner() {
+  const { user } = useAuth()
+  const uid = user?.uid
   const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const q = query(collection(db, COLLECTION), orderBy('createdAt', 'desc'))
+    if (!uid) return
+    const col = collection(db, 'users', uid, 'planner')
+    const q = query(col, orderBy('createdAt', 'desc'))
     const unsub = onSnapshot(q, (snap) => {
       setEntries(snap.docs.map(d => ({ id: d.id, ...d.data() })))
       setLoading(false)
     })
     return unsub
-  }, [])
+  }, [uid])
+
+  const col = () => collection(db, 'users', uid, 'planner')
+  const docRef = (id) => doc(db, 'users', uid, 'planner', id)
 
   const addEntry = (data) =>
-    addDoc(collection(db, COLLECTION), { ...data, createdAt: serverTimestamp() })
+    addDoc(col(), { ...data, createdAt: serverTimestamp() })
 
   const deleteEntry = (id) =>
-    deleteDoc(doc(db, COLLECTION, id))
+    deleteDoc(docRef(id))
 
   const updateEntry = (id, data) =>
-    updateDoc(doc(db, COLLECTION, id), data)
+    updateDoc(docRef(id), data)
 
   return { entries, loading, addEntry, deleteEntry, updateEntry }
 }
