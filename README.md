@@ -10,7 +10,7 @@
 **StudyNest** — Student Productivity Hub
 
 ## Team Name
-*[Isi Nama Tim Kamu]*
+*Kode Langit88*
 
 ## Backend
 **Firebase Firestore** (Google Firebase Cloud Database)
@@ -53,15 +53,8 @@ npm run dev
 npm run build
 ```
 
-## Firebase Setup
-
-1. Buat project di [Firebase Console](https://console.firebase.google.com)
-2. Enable **Firestore Database**
-3. Buat **Web App** → copy konfigurasi
-4. Paste ke file `.env`
-
 ## Live Demo
-*[Link hosting kamu]*
+https://studynest-puce.vercel.app/
 
 ---
 
