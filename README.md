@@ -7,8 +7,11 @@
 ---
 
 **Website Name:** StudyNest — Student Productivity Hub
+
 **Team Name:** Kode Langit88
-**Backend:** Tidak, hanya menggunakan firebase Firestore saja yang sudah ada di google cloud.
+
+**Backend:** Tidak ada, hanya menggunakan Firebase Firestore saja untuk menyimpan data.
+
 **List Features:** Notes, Task Manager, Focus Timer, Study Planner, AI Chat.
 
 ## Backend
