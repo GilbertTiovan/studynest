@@ -40,7 +40,7 @@ function Message({ msg }) {
 export default function AIChat() {
   const [open, setOpen]         = useState(false)
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Halo! 👋 Saya StudyNest AI, asisten belajarmu. Ada yang bisa saya bantu hari ini?' }
+    { role: 'assistant', content: 'Hello! 👋 I\'m StudyNest AI, your study assistant. How can I help you today?' }
   ])
   const [input, setInput]       = useState('')
   const [loading, setLoading]   = useState(false)
@@ -62,7 +62,7 @@ export default function AIChat() {
     if (!text || loading) return
 
     if (!apiKey || apiKey === 'your_gemini_api_key_here') {
-      setError('⚠️ Gemini API key belum diisi di file .env (VITE_GEMINI_API_KEY)')
+      setError('⚠️ Gemini API key is not set in your .env file (VITE_GEMINI_API_KEY)')
       return
     }
 
@@ -96,11 +96,11 @@ export default function AIChat() {
 
       if (!response.ok) {
         const errData = await response.json()
-        throw new Error(errData?.error?.message || 'Gagal menghubungi Gemini API')
+        throw new Error(errData?.error?.message || 'Failed to contact Gemini API')
       }
 
       const data = await response.json()
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak bisa merespons saat ini.'
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I cannot respond right now.'
       setMessages(prev => [...prev, { role: 'assistant', content: reply }])
     } catch (err) {
       setError(`❌ ${err.message}`)
@@ -145,7 +145,7 @@ export default function AIChat() {
             </div>
             <div className="flex gap-1">
               <button
-                onClick={() => setMessages([{ role: 'assistant', content: 'Chat dibersihkan! Ada yang bisa saya bantu? 😊' }])}
+                onClick={() => setMessages([{ role: 'assistant', content: 'Chat cleared! How can I help you? 😊' }])}
                 className="p-1.5 text-slate-500 hover:text-slate-300 transition-colors rounded-lg hover:bg-white/5"
                 title="Clear chat"
               >
@@ -189,7 +189,7 @@ export default function AIChat() {
               <textarea
                 ref={inputRef}
                 rows={1}
-                placeholder="Tanya apa saja..."
+                placeholder="Ask me anything..."
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={handleKey}
@@ -208,7 +208,7 @@ export default function AIChat() {
                 {loading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
               </button>
             </div>
-            <p className="text-slate-600 text-xs mt-1.5 text-center">Enter untuk kirim · Shift+Enter untuk baris baru</p>
+            <p className="text-slate-600 text-xs mt-1.5 text-center">Enter to send · Shift+Enter for new line</p>
           </div>
         </div>
       )}

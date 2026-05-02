@@ -5,18 +5,18 @@ import {
   Clock, BookOpen, Loader2
 } from 'lucide-react'
 
-const DAYS = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 const COLORS = [
-  { value: '#7c3aed', label: 'Ungu' },
-  { value: '#2563eb', label: 'Biru' },
-  { value: '#059669', label: 'Hijau' },
-  { value: '#d97706', label: 'Kuning' },
-  { value: '#dc2626', label: 'Merah' },
+  { value: '#7c3aed', label: 'Purple' },
+  { value: '#2563eb', label: 'Blue' },
+  { value: '#059669', label: 'Green' },
+  { value: '#d97706', label: 'Yellow' },
+  { value: '#dc2626', label: 'Red' },
   { value: '#db2777', label: 'Pink' },
 ]
 
-const EMPTY_FORM = { day: 'Senin', subject: '', startTime: '08:00', endTime: '10:00', color: '#7c3aed', note: '' }
+const EMPTY_FORM = { day: 'Monday', subject: '', startTime: '08:00', endTime: '10:00', color: '#7c3aed', note: '' }
 
 export default function StudyPlanner() {
   const { entries, loading, addEntry, deleteEntry } = usePlanner()
@@ -49,7 +49,7 @@ export default function StudyPlanner() {
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <CalendarDays size={20} className="text-blue-400" /> Study Planner
           </h2>
-          <p className="text-slate-500 text-sm">{entries.length} sesi terjadwal minggu ini</p>
+          <p className="text-slate-500 text-sm">{entries.length} sessions scheduled this week</p>
         </div>
         <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2">
           <Plus size={16} /> Add Schedule
@@ -93,10 +93,10 @@ export default function StudyPlanner() {
             <div key={day} className="glass-card p-4 space-y-3">
               <h3 className="text-white font-semibold text-sm border-b border-white/5 pb-2 flex items-center justify-between">
                 {day}
-                <span className="text-xs text-slate-500">{byDay[day].length} sesi</span>
+                <span className="text-xs text-slate-500">{byDay[day].length} sessions</span>
               </h3>
               {byDay[day].length === 0 ? (
-                <p className="text-slate-600 text-xs text-center py-4">Belum ada jadwal</p>
+                <p className="text-slate-600 text-xs text-center py-4">No schedule yet</p>
               ) : (
                 byDay[day]
                   .sort((a, b) => a.startTime?.localeCompare(b.startTime))
@@ -131,8 +131,8 @@ export default function StudyPlanner() {
           {filtered.length === 0 ? (
             <div className="text-center py-16 text-slate-600">
               <CalendarDays size={48} className="mx-auto mb-3 opacity-20" />
-              <p className="font-medium">Tidak ada jadwal untuk hari {activeDay}</p>
-              <p className="text-sm mt-1">Klik "Add Schedule" untuk menambahkan</p>
+              <p className="font-medium">No schedule for {activeDay}</p>
+              <p className="text-sm mt-1">Click "Add Schedule" to add one</p>
             </div>
           ) : (
             filtered
@@ -177,18 +177,18 @@ export default function StudyPlanner() {
             </div>
 
             <div>
-              <label className="text-slate-500 text-xs mb-1 block">Hari</label>
+              <label className="text-slate-500 text-xs mb-1 block">Day</label>
               <select value={form.day} onChange={e => setForm(f => ({ ...f, day: e.target.value }))} className="input-field text-sm">
                 {DAYS.map(d => <option key={d}>{d}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="text-slate-500 text-xs mb-1 block">Mata Kuliah / Topik</label>
+              <label className="text-slate-500 text-xs mb-1 block">Subject / Topic</label>
               <input
                 autoFocus
                 type="text"
-                placeholder="e.g. Kalkulus, Pemrograman Web..."
+                placeholder="e.g. Calculus, Web Programming..."
                 value={form.subject}
                 onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
                 className="input-field text-sm"
@@ -197,22 +197,22 @@ export default function StudyPlanner() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-slate-500 text-xs mb-1 block">Mulai</label>
+                <label className="text-slate-500 text-xs mb-1 block">Start</label>
                 <input type="time" value={form.startTime} onChange={e => setForm(f => ({ ...f, startTime: e.target.value }))} className="input-field text-sm" />
               </div>
               <div>
-                <label className="text-slate-500 text-xs mb-1 block">Selesai</label>
+                <label className="text-slate-500 text-xs mb-1 block">End</label>
                 <input type="time" value={form.endTime} onChange={e => setForm(f => ({ ...f, endTime: e.target.value }))} className="input-field text-sm" />
               </div>
             </div>
 
             <div>
-              <label className="text-slate-500 text-xs mb-1 block">Catatan (opsional)</label>
-              <input type="text" placeholder="e.g. Chapter 3, Tugas kelompok..." value={form.note} onChange={e => setForm(f => ({ ...f, note: e.target.value }))} className="input-field text-sm" />
+              <label className="text-slate-500 text-xs mb-1 block">Notes (optional)</label>
+              <input type="text" placeholder="e.g. Chapter 3, Group assignment..." value={form.note} onChange={e => setForm(f => ({ ...f, note: e.target.value }))} className="input-field text-sm" />
             </div>
 
             <div>
-              <label className="text-slate-500 text-xs mb-1 block">Warna</label>
+              <label className="text-slate-500 text-xs mb-1 block">Color</label>
               <div className="flex gap-2">
                 {COLORS.map(({ value }) => (
                   <button
@@ -226,10 +226,10 @@ export default function StudyPlanner() {
             </div>
 
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setShowModal(false)} className="btn-secondary text-sm">Batal</button>
+              <button onClick={() => setShowModal(false)} className="btn-secondary text-sm">Cancel</button>
               <button onClick={handleSave} disabled={saving || !form.subject.trim()} className="btn-primary text-sm flex items-center gap-2">
                 {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-                Simpan
+                Save
               </button>
             </div>
           </div>

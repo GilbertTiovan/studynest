@@ -16,11 +16,11 @@ export default function RegisterPage({ onSwitchToLogin }) {
     e.preventDefault()
     setError('')
     if (password !== confirm) {
-      setError('Password dan konfirmasi tidak cocok.')
+      setError('Passwords do not match.')
       return
     }
     if (password.length < 6) {
-      setError('Password minimal 6 karakter.')
+      setError('Password must be at least 6 characters.')
       return
     }
     setLoading(true)
@@ -70,8 +70,8 @@ export default function RegisterPage({ onSwitchToLogin }) {
 
         {/* Card */}
         <div className="glass-card p-8">
-          <h2 className="text-white font-bold text-xl mb-1">Buat akun baru 🚀</h2>
-          <p className="text-slate-500 text-sm mb-6">Mulai perjalanan belajar produktifmu</p>
+          <h2 className="text-white font-bold text-xl mb-1">Create a new account 🚀</h2>
+          <p className="text-slate-500 text-sm mb-6">Start your productive learning journey</p>
 
           {/* Error */}
           {error && (
@@ -92,25 +92,25 @@ export default function RegisterPage({ onSwitchToLogin }) {
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
             </svg>
-            Daftar dengan Google
+            Sign up with Google
           </button>
 
           {/* Divider */}
           <div className="flex items-center gap-3 mb-4">
             <div className="flex-1 h-px bg-white/5" />
-            <span className="text-slate-600 text-xs">atau dengan email</span>
+            <span className="text-slate-600 text-xs">or with email</span>
             <div className="flex-1 h-px bg-white/5" />
           </div>
 
           {/* Form */}
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="block text-slate-400 text-sm mb-1.5 font-medium">Nama Lengkap</label>
+              <label className="block text-slate-400 text-sm mb-1.5 font-medium">Full Name</label>
               <div className="relative">
                 <User size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
                   type="text"
-                  placeholder="Nama kamu"
+                  placeholder="Your name"
                   value={name}
                   onChange={e => setName(e.target.value)}
                   required
@@ -140,7 +140,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
                 <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
                   type={showPass ? 'text' : 'password'}
-                  placeholder="Min. 6 karakter"
+                  placeholder="Min. 6 characters"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
@@ -157,12 +157,12 @@ export default function RegisterPage({ onSwitchToLogin }) {
             </div>
 
             <div>
-              <label className="block text-slate-400 text-sm mb-1.5 font-medium">Konfirmasi Password</label>
+              <label className="block text-slate-400 text-sm mb-1.5 font-medium">Confirm Password</label>
               <div className="relative">
                 <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
                   type={showPass ? 'text' : 'password'}
-                  placeholder="Ulangi password"
+                  placeholder="Repeat your password"
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
                   required
@@ -177,18 +177,18 @@ export default function RegisterPage({ onSwitchToLogin }) {
               className="btn-primary w-full flex items-center justify-center gap-2 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <UserPlus size={16} />
-              {loading ? 'Memproses...' : 'Buat Akun'}
+              {loading ? 'Processing...' : 'Create Account'}
             </button>
           </form>
 
           {/* Switch to login */}
           <p className="text-center text-slate-500 text-sm mt-5">
-            Sudah punya akun?{' '}
+            Already have an account?{' '}
             <button
               onClick={onSwitchToLogin}
               className="text-primary-400 hover:text-primary-300 font-medium transition-colors"
             >
-              Masuk sekarang
+              Sign in now
             </button>
           </p>
         </div>
@@ -199,10 +199,10 @@ export default function RegisterPage({ onSwitchToLogin }) {
 
 function getFriendlyError(code) {
   const map = {
-    'auth/email-already-in-use': 'Email sudah digunakan akun lain.',
-    'auth/invalid-email': 'Format email tidak valid.',
-    'auth/weak-password': 'Password terlalu lemah.',
-    'auth/network-request-failed': 'Gagal terhubung ke internet.',
+    'auth/email-already-in-use': 'This email is already in use by another account.',
+    'auth/invalid-email': 'Invalid email format.',
+    'auth/weak-password': 'Password is too weak.',
+    'auth/network-request-failed': 'Failed to connect to the internet.',
   }
-  return map[code] || 'Terjadi kesalahan. Coba lagi.'
+  return map[code] || 'An error occurred. Please try again.'
 }

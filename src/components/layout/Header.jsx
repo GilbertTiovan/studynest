@@ -4,8 +4,8 @@ import { useAuth } from '../../context/AuthContext'
 export default function Header({ title }) {
   const { user, logout } = useAuth()
   const now = new Date()
-  const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-  const dateString = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+  const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+  const dateString = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
   const initials = user?.displayName
     ? user.displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)

@@ -86,7 +86,7 @@ export default function Pomodoro() {
         <h2 className="text-xl font-bold text-white text-center flex items-center gap-2 justify-center">
           <Timer size={20} className="text-orange-400" /> Focus Timer
         </h2>
-        <p className="text-slate-500 text-sm text-center">Teknik Pomodoro — fokus 25 menit, istirahat 5 menit</p>
+        <p className="text-slate-500 text-sm text-center">Pomodoro Technique — focus for 25 minutes, break for 5 minutes</p>
       </div>
 
       {/* Mode Selector */}
@@ -166,16 +166,16 @@ export default function Pomodoro() {
             <Flame size={16} className="text-orange-400" />
             <span className="text-orange-400 font-bold text-xl">{sessions}</span>
           </div>
-          <p className="text-slate-500 text-xs">Sesi Selesai</p>
+          <p className="text-slate-500 text-xs">Sessions Done</p>
         </div>
         <div className="glass-card p-4 text-center">
           <div className="flex items-center justify-center gap-1 mb-1">
             <Timer size={16} className="text-primary-400" />
             <span className="text-primary-400 font-bold text-xl">
-              {totalFocusHours > 0 ? `${totalFocusHours}j ${totalFocusMins}m` : `${totalFocusMins}m`}
+              {totalFocusHours > 0 ? `${totalFocusHours}h ${totalFocusMins}m` : `${totalFocusMins}m`}
             </span>
           </div>
-          <p className="text-slate-500 text-xs">Total Fokus</p>
+          <p className="text-slate-500 text-xs">Total Focus</p>
         </div>
       </div>
 
@@ -183,10 +183,10 @@ export default function Pomodoro() {
       <div className={`w-full max-w-sm glass-card p-4 bg-gradient-to-r ${current.bg} border ${current.border}`}>
         <p className="text-slate-300 text-sm text-center">
           {mode === 'FOCUS'
-            ? '🧠 Singkirkan distraksi. Fokus penuh selama 25 menit!'
+            ? '🧠 Eliminate distractions. Full focus for 25 minutes!'
             : mode === 'SHORT'
-            ? '☕ Istirahat sebentar, regangkan badan, minum air!'
-            : '🌿 Istirahat panjang. Kamu sudah bekerja keras!'}
+            ? '☕ Take a short break, stretch, drink some water!'
+            : '🌿 Long break. You have been working hard!'}
         </p>
       </div>
     </div>

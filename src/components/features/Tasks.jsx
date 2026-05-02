@@ -47,7 +47,7 @@ export default function Tasks() {
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <CheckSquare size={20} className="text-green-400" /> My Tasks
           </h2>
-          <p className="text-slate-500 text-sm">{completedCount}/{tasks.length} selesai</p>
+          <p className="text-slate-500 text-sm">{completedCount}/{tasks.length} completed</p>
         </div>
         <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2">
           <Plus size={16} /> Add Task
@@ -58,7 +58,7 @@ export default function Tasks() {
       {tasks.length > 0 && (
         <div className="glass-card p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-slate-400 text-sm font-medium">Progress Keseluruhan</span>
+            <span className="text-slate-400 text-sm font-medium">Overall Progress</span>
             <span className="text-white font-bold">{progress}%</span>
           </div>
           <div className="w-full h-2 bg-dark-500 rounded-full overflow-hidden">
@@ -96,8 +96,8 @@ export default function Tasks() {
       ) : filtered.length === 0 ? (
         <div className="text-center py-16 text-slate-600">
           <CheckCheck size={48} className="mx-auto mb-3 opacity-20" />
-          <p className="font-medium">Tidak ada tugas {filter !== 'All' ? filter.toLowerCase() : ''}</p>
-          <p className="text-sm mt-1">Klik "Add Task" untuk menambahkan tugas baru</p>
+          <p className="font-medium">No {filter !== 'All' ? filter.toLowerCase() + ' ' : ''}tasks</p>
+          <p className="text-sm mt-1">Click "Add Task" to create a new task</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -118,7 +118,7 @@ export default function Tasks() {
                 </p>
                 {task.deadline && (
                   <p className="text-xs text-slate-600 mt-0.5">
-                    📅 {new Date(task.deadline).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    📅 {new Date(task.deadline).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
                 )}
               </div>
@@ -147,14 +147,14 @@ export default function Tasks() {
             <input
               autoFocus
               type="text"
-              placeholder="Nama tugas..."
+              placeholder="Task name..."
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               className="input-field"
             />
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-slate-500 text-xs mb-1 block">Prioritas</label>
+                <label className="text-slate-500 text-xs mb-1 block">Priority</label>
                 <select
                   value={form.priority}
                   onChange={e => setForm(f => ({ ...f, priority: e.target.value }))}
@@ -164,7 +164,7 @@ export default function Tasks() {
                 </select>
               </div>
               <div>
-                <label className="text-slate-500 text-xs mb-1 block">Deadline (opsional)</label>
+                <label className="text-slate-500 text-xs mb-1 block">Deadline (optional)</label>
                 <input
                   type="date"
                   value={form.deadline}
@@ -174,10 +174,10 @@ export default function Tasks() {
               </div>
             </div>
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setShowModal(false)} className="btn-secondary text-sm">Batal</button>
+              <button onClick={() => setShowModal(false)} className="btn-secondary text-sm">Cancel</button>
               <button onClick={handleSave} disabled={saving || !form.title.trim()} className="btn-primary text-sm flex items-center gap-2">
                 {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-                Tambah
+                Add
               </button>
             </div>
           </div>

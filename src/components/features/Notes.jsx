@@ -9,9 +9,9 @@ const NOTE_COLORS = [
   '#7c3aed', '#2563eb', '#059669', '#d97706', '#dc2626', '#db2777'
 ]
 
-const CATEGORIES = ['All', 'Kuliah', 'Personal', 'Ide', 'Riset', 'Lainnya']
+const CATEGORIES = ['All', 'Lectures', 'Personal', 'Ideas', 'Research', 'Other']
 
-const EMPTY_FORM = { title: '', content: '', category: 'Kuliah', color: NOTE_COLORS[0] }
+const EMPTY_FORM = { title: '', content: '', category: 'Lectures', color: NOTE_COLORS[0] }
 
 export default function Notes() {
   const { notes, loading, addNote, updateNote, deleteNote } = useNotes()
@@ -60,7 +60,7 @@ export default function Notes() {
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <NotebookPen size={20} className="text-primary-400" /> My Notes
           </h2>
-          <p className="text-slate-500 text-sm">{notes.length} catatan tersimpan</p>
+          <p className="text-slate-500 text-sm">{notes.length} notes saved</p>
         </div>
         <button onClick={openAdd} className="btn-primary flex items-center gap-2">
           <Plus size={16} /> New Note
@@ -73,7 +73,7 @@ export default function Notes() {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
             type="text"
-            placeholder="Cari catatan..."
+            placeholder="Search notes..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="input-field pl-9"
@@ -104,8 +104,8 @@ export default function Notes() {
       ) : filtered.length === 0 ? (
         <div className="text-center py-16 text-slate-600">
           <NotebookPen size={48} className="mx-auto mb-3 opacity-20" />
-          <p className="font-medium">Belum ada catatan</p>
-          <p className="text-sm mt-1">Klik "New Note" untuk mulai menulis</p>
+          <p className="font-medium">No notes yet</p>
+          <p className="text-sm mt-1">Click "New Note" to start writing</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -135,7 +135,7 @@ export default function Notes() {
                 </span>
                 <span className="text-slate-600 text-xs">
                   {note.updatedAt?.toDate
-                    ? note.updatedAt.toDate().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })
+                    ? note.updatedAt.toDate().toLocaleDateString('en-US', { day: 'numeric', month: 'short' })
                     : '—'}
                 </span>
               </div>
@@ -158,14 +158,14 @@ export default function Notes() {
             <input
               autoFocus
               type="text"
-              placeholder="Judul catatan..."
+              placeholder="Note title..."
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               className="input-field text-sm font-medium"
             />
 
             <textarea
-              placeholder="Tulis catatanmu di sini..."
+              placeholder="Write your note here..."
               value={form.content}
               onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
               rows={5}
@@ -174,7 +174,7 @@ export default function Notes() {
 
             <div className="flex gap-4 items-center">
               <div className="flex-1">
-                <label className="text-slate-500 text-xs mb-1 block">Kategori</label>
+                <label className="text-slate-500 text-xs mb-1 block">Category</label>
                 <select
                   value={form.category}
                   onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
@@ -186,7 +186,7 @@ export default function Notes() {
                 </select>
               </div>
               <div>
-                <label className="text-slate-500 text-xs mb-1 block">Warna</label>
+                <label className="text-slate-500 text-xs mb-1 block">Color</label>
                 <div className="flex gap-1.5">
                   {NOTE_COLORS.map(color => (
                     <button
@@ -201,10 +201,10 @@ export default function Notes() {
             </div>
 
             <div className="flex gap-2 justify-end">
-              <button onClick={closeModal} className="btn-secondary text-sm">Batal</button>
+              <button onClick={closeModal} className="btn-secondary text-sm">Cancel</button>
               <button onClick={handleSave} disabled={saving || !form.title.trim()} className="btn-primary text-sm flex items-center gap-2">
                 {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-                {editNote ? 'Update' : 'Simpan'}
+                {editNote ? 'Update' : 'Save'}
               </button>
             </div>
           </div>
